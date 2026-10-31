@@ -314,6 +314,37 @@
     width: 12px; height: 12px;
   }
 
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .comp h3 {
+    font-size: 1rem;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 4px;
+  }
+
+  .comp a { color: var(--cyan); font-size: .75rem; word-break: break-all; }
+
+  .comp dl {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 6px 12px;
+    margin-top: 12px;
+    font-size: .8rem;
+    line-height: 1.5;
+  }
+
+  .comp dt { color: var(--cyan); text-transform: uppercase; font-size: .7rem; letter-spacing: .06em; padding-top: 2px; }
+  .comp dd { color: var(--muted); }
+  .comp ul { padding-left: 16px; color: var(--muted); }
+  .comp li { margin-bottom: 4px; }
+
   @media (max-width: 1024px) {
     aside { width: 180px; padding: 16px; }
     main { padding: 20px; }
@@ -347,6 +378,7 @@
         <button class="nav" id="nav-metrics" aria-selected="false">📈 Метрики</button>
         <button class="nav" id="nav-projects" aria-selected="false">🏗️ Проекты</button>
         <button class="nav" id="nav-team" aria-selected="false">👥 Команда</button>
+        <button class="nav" id="nav-competitors" aria-selected="false">🔎 Конкуренты</button>
       </nav>
       <div style="flex: 1;"></div>
       <div style="font-size: .75rem; color: var(--muted); line-height: 1.6; border-top: 1px solid var(--cyan-dim); padding-top: 16px;">
@@ -544,6 +576,148 @@
           </div>
         </div>
       </section>
+
+      <!-- COMPETITORS -->
+      <section id="view-competitors" hidden>
+        <div class="card" style="margin-bottom: 24px;">
+          <h2>Разведка рынка</h2>
+          <p class="note">Москва и Краснодарский край. Разбор 2026-10-31 по открытым данным. Цены с сайтов «от», для сметы нужен запрос коммерческого предложения.</p>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr><th>Компания</th><th>Регион</th><th>Позиция в запросе*</th><th>Цена «от»</th><th>Гарантия</th><th>Что взять</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Капитал-Строй Юг</strong></td><td>Краснодар</td><td>4</td><td>10 000 ₽/м²</td><td>30 лет</td><td>Калькулятор с диапазоном цены и срока</td></tr>
+                <tr><td><strong>Бескаркасник / Ярангар</strong></td><td>Краснодар, Москва</td><td>9 / 9</td><td>3 250–4 500 ₽/м²</td><td>2 года</td><td>Разбивка цен по позициям, справочники</td></tr>
+                <tr><td><strong>КаменьПрок</strong></td><td>Краснодар</td><td>8</td><td>10 071 ₽/м²</td><td>5 лет</td><td>Рассрочка и кредит на сайте</td></tr>
+                <tr><td><strong>СК Созидание</strong></td><td>Москва</td><td>5</td><td>Проект от 1 000 ₽/м²</td><td>3 года</td><td>Партнёры, поставщики, статусы проектов</td></tr>
+                <tr><td><strong>Angarium</strong></td><td>Москва, Краснодар</td><td>1 / 3</td><td>4 700 ₽/м²</td><td>—</td><td>Проверить: сайт вернул 404</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note" style="margin-top: 12px;">*Порядок в нашем поисковом запросе, не реальная позиция в Яндексе или Google.</p>
+        </div>
+
+        <div class="comp-grid">
+          <div class="card comp">
+            <h3>Капитал-Строй Юг</h3>
+            <a href="https://kapital-krd.com/angary-sklady" target="_blank" rel="noopener">kapital-krd.com/angary-sklady</a>
+            <dl>
+              <dt>О компании</dt><dd>С 2007 года. Производство в Краснодаре, филиал в Ростове-на-Дону. Ангары, склады, цеха, монтаж МК.</dd>
+              <dt>Цены</dt><dd>Холодный склад от 10 000, тёплый от 18 500, под ключ с инженерией от 25 000 ₽/м². Пример: 20×40 м — 8 млн ₽.</dd>
+              <dt>Сроки</dt><dd>Каркас от 14 дней. Под ключ: 45 дней в таблице, 30–60 в FAQ.</dd>
+              <dt>Сильное</dt><dd>
+                <ul>
+                  <li>Калькулятор с диапазоном цены и срока, скидка −3% за объём</li>
+                  <li>Технические детали: нагрузки, антикоррозия, сварка</li>
+                  <li>Блог из трёх статей</li>
+                </ul>
+              </dd>
+              <dt>Слабое</dt><dd>
+                <ul>
+                  <li>«300+ объектов» и «136+ в галерее»</li>
+                  <li>Нет СРО, ИНН, ОГРН</li>
+                  <li>Мало отзывов с датами, три кейса «до/после»</li>
+                </ul>
+              </dd>
+              <dt>Берём</dt><dd>Формат калькулятора, блок технических гарантий, «примеры расчёта»</dd>
+            </dl>
+          </div>
+
+          <div class="card comp">
+            <h3>Бескаркасник / Ярангар</h3>
+            <a href="https://krasnodar.yarangar.ru/kupit-beskarkasnyj-angar/" target="_blank" rel="noopener">krasnodar.yarangar.ru</a> ·
+            <a href="https://yarangar.ru/stroitelstvo-angarov/" target="_blank" rel="noopener">yarangar.ru (Москва)</a>
+            <dl>
+              <dt>О компании</dt><dd>ООО «СК Бескаркасник», работает по России с 2005 года (по футеру). Один бренд, региональные сайты.</dd>
+              <dt>Цены</dt><dd>«от 4 500 ₽/м²» в шапке, «от 3 250 до 4 200» в тексте. Актуальны на 01.07.2022.</dd>
+              <dt>Сроки</dt><dd>20–25 дней, бригада 10–12 человек. Минимум 800 м².</dd>
+              <dt>Сильное</dt><dd>
+                <ul>
+                  <li>Разбивка цен: купол, торцевая стена, фундамент, утепление, пол</li>
+                  <li>Карта снеговых и ветровых нагрузок, калькулятор вместимости</li>
+                  <li>Честный раздел о минусах арочных ангаров</li>
+                </ul>
+              </dd>
+              <dt>Слабое</dt><dd>
+                <ul>
+                  <li>Цены 2022 года при годе 2026 в футере</li>
+                  <li>Два разных номера WhatsApp, разные сроки и сталь</li>
+                  <li>Нет отзывов и кейсов, переспам «в Краснодаре»</li>
+                </ul>
+              </dd>
+              <dt>Берём</dt><dd>Разбивку цен по позициям и справочные материалы, но с актуальными датами</dd>
+            </dl>
+          </div>
+
+          <div class="card comp">
+            <h3>КаменьПрок</h3>
+            <a href="https://krasnodar.kamprok.ru/angar-pod-klyuch" target="_blank" rel="noopener">krasnodar.kamprok.ru/angar-pod-klyuch</a>
+            <dl>
+              <dt>О компании</dt><dd>Краснодар, ул. Ставропольская, 2. Опыт «более 11 лет».</dd>
+              <dt>Цены</dt><dd>«от 93 438», «от 10 071 ₽/м²», «от 6 541», «от 12 770». Не публичная оферта.</dd>
+              <dt>Гарантия</dt><dd>5 лет на все работы. Строительство от 32 дней до 3 месяцев.</dd>
+              <dt>Сильное</dt><dd>
+                <ul>
+                  <li>Понятная схема «под ключ» с этапами</li>
+                  <li>Рассрочка, кредит, оплата картой и по счёту</li>
+                  <li>Калькулятор и вызов замерщика</li>
+                </ul>
+              </dd>
+              <dt>Слабое</dt><dd>
+                <ul>
+                  <li>Четыре разные цены на одной странице</li>
+                  <li>Фото без подписей, часть подписана как «дома»</li>
+                  <li>Опечатки в тексте, сеть похожих региональных сайтов</li>
+                </ul>
+              </dd>
+              <dt>Берём</dt><dd>Блок оплаты с рассрочкой прямо на сайте</dd>
+            </dl>
+          </div>
+
+          <div class="card comp">
+            <h3>СК Созидание</h3>
+            <a href="https://sk-sozidanie.ru/services/stroitelstvo-angarov/" target="_blank" rel="noopener">sk-sozidanie.ru</a>
+            <dl>
+              <dt>О компании</dt><dd>Москва, с 2015 года. Генподряд, проектирование, ангары и склады под ключ. Партнёр DoorHan.</dd>
+              <dt>Цены</dt><dd>Проект от 1 000 ₽/м², монтаж МК от 45 000 ₽/т, генподряд от 3%. Типовой 360 м² — 12,8 млн ₽.</dd>
+              <dt>Гарантия</dt><dd>3 года на все работы.</dd>
+              <dt>Сильное</dt><dd>
+                <ul>
+                  <li>Партнёры и поставщики: Технониколь, Evraz, Истринский ЗМК</li>
+                  <li>8 типовых проектов, реальные объекты, статусы «в реализации»</li>
+                  <li>Прайс в xlsx, калькулятор здания</li>
+                </ul>
+              </dd>
+              <dt>Слабое</dt><dd>
+                <ul>
+                  <li>Кнопки ведут на javascript:void, пять дублирующих форм</li>
+                  <li>Цена за м² в типовых проектах от 24 до 39 тыс. без объяснения</li>
+                  <li>Сроки не указаны, номера СРО нет, FAQ нет</li>
+                </ul>
+              </dd>
+              <dt>Берём</dt><dd>Блок партнёров и поставщиков, статусы проектов</dd>
+            </dl>
+          </div>
+
+          <div class="card comp">
+            <h3>Angarium</h3>
+            <a href="https://angarium.ru/moskva-angary/" target="_blank" rel="noopener">angarium.ru</a>
+            <dl>
+              <dt>Статус</dt><dd>Страницы вернули 404. Проверить главную вручную. В Москве занимает 1-е место в нашей выдаче.</dd>
+              <dt>Цены</dt><dd>От 4 700 ₽/м² (по данным поиска).</dd>
+            </dl>
+          </div>
+
+          <div class="card comp">
+            <h3>Исключён: SMG-Stroy</h3>
+            <dl>
+              <dt>Статус</dt><dd>Домен ведёт на онлайн-казино. Не конкурент. Ссылку не открывать.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -600,7 +774,8 @@
     'strategy': document.getElementById('view-strategy'),
     'metrics': document.getElementById('view-metrics'),
     'projects': document.getElementById('view-projects'),
-    'team': document.getElementById('view-team')
+    'team': document.getElementById('view-team'),
+    'competitors': document.getElementById('view-competitors')
   };
 
   navButtons.forEach(btn => {
