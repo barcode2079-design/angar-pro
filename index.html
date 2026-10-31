@@ -4,27 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0a0a0a">
-<title>ANGAR PRO — Ангары и металлоконструкции</title>
+<title>ANGAR PRO — Стратегия развития бизнеса</title>
 <style>
   :root {
     --bg: #0a0a0a;
     --cyan: #00e5ff;
     --cyan-dim: rgba(0,229,255,.35);
-    --cyan-light: #a0faff;
     --orange: #ff7a1a;
     --orange-dim: rgba(255,122,26,.3);
     --text: #e6fbff;
     --muted: #8fb4bd;
-    --accent: #00d9ff;
+    --success: #00ff88;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     background: var(--bg);
     color: var(--text);
     font-family: "Orbitron", "Eurostile", "Bank Gothic", "Segoe UI", -apple-system, Roboto, Helvetica, Arial, sans-serif;
-    overflow-x: hidden;
+    display: flex;
+    height: 100vh;
   }
 
   #grid { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; }
@@ -36,470 +36,298 @@
       radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.65) 100%);
   }
 
-  /* header + nav */
-  header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
-    background: rgba(4,12,16,.8);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--cyan-dim);
-    padding: 16px 24px;
-    display: flex; align-items: center; justify-content: space-between;
+  .app { display: flex; width: 100%; height: 100vh; }
+
+  aside {
+    width: 240px;
+    background: rgba(4,12,16,.9);
+    border-right: 1px solid var(--cyan-dim);
+    padding: 24px;
+    display: flex; flex-direction: column;
+    gap: 24px;
+    z-index: 2;
+    position: relative;
+    overflow-y: auto;
   }
 
-  .logo {
-    font-size: 1.5rem; font-weight: 900; letter-spacing: .15em;
+  .brand {
+    font-size: 1.3rem; font-weight: 900; letter-spacing: .1em;
     color: var(--cyan);
     text-shadow: 0 0 10px var(--cyan);
   }
 
-  nav {
-    display: flex; gap: 24px; align-items: center;
+  .nav-group {
+    display: flex; flex-direction: column; gap: 8px;
   }
 
-  nav a {
-    font-size: .85rem; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--muted); text-decoration: none;
-    transition: color .3s, text-shadow .3s;
+  .nav {
+    background: rgba(0,229,255,.05);
+    border: 1px solid var(--cyan-dim);
+    color: var(--muted);
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all .2s;
+    text-align: left;
+    font-size: .85rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
   }
 
-  nav a:hover {
+  .nav:hover {
     color: var(--cyan);
-    text-shadow: 0 0 8px var(--cyan);
+    border-color: var(--cyan);
+    box-shadow: 0 0 12px rgba(0,229,255,.2);
   }
 
-  /* main container */
+  .nav[aria-selected="true"] {
+    color: var(--orange);
+    border-color: var(--orange);
+    background: rgba(255,122,26,.1);
+    box-shadow: 0 0 12px rgba(255,122,26,.3);
+  }
+
   main {
-    position: relative; z-index: 2;
-    display: flex; flex-direction: column;
-    min-height: 100vh;
+    flex: 1;
+    position: relative;
+    z-index: 2;
+    overflow-y: auto;
+    padding: 32px;
   }
 
-  /* hero section */
-  .hero {
-    min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    padding: 100px 24px 24px;
-    text-align: center;
-  }
-
-  .hero-content {
-    max-width: 820px;
-    animation: slideUp .8s ease-out;
-  }
-
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .status {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
-    color: var(--cyan);
-    margin-bottom: 22px;
-  }
-
-  .status i {
-    width: 8px; height: 8px; background: var(--orange);
-    box-shadow: 0 0 10px var(--orange);
-    animation: blink 1.4s infinite;
-  }
-
-  @keyframes blink { 50% { opacity: .15; } }
+  .top { margin-bottom: 40px; }
 
   h1 {
-    font-size: clamp(2.5rem, 10vw, 4.5rem);
-    line-height: 1.1;
+    font-size: 2.5rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: .08em;
-    color: #eaffff;
-    text-shadow:
-      0 0 6px #fff,
-      0 0 14px var(--cyan),
-      0 0 32px var(--cyan),
-      0 0 64px rgba(0,229,255,.6);
-    animation: flicker 6s infinite;
-    margin-bottom: 16px;
-    word-break: break-word;
+    color: var(--cyan);
+    text-shadow: 0 0 20px var(--cyan);
+    margin-bottom: 8px;
   }
 
-  @keyframes flicker {
-    0%,18%,22%,62%,64%,100% { opacity: 1; }
-    20%,63% { opacity: .55; }
-  }
-
-  .subtitle {
-    font-size: 1.3rem;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    color: var(--orange);
-    text-shadow: 0 0 10px rgba(255,122,26,.7);
-    margin-bottom: 30px;
-  }
-
-  .divider {
-    height: 2px; width: 60%; max-width: 300px;
-    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-    box-shadow: 0 0 12px var(--cyan);
-    margin: 24px auto 30px;
-  }
-
-  .hero-desc {
-    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  .sub {
     color: var(--muted);
-    font-size: 1.05rem;
-    line-height: 1.8;
+    font-size: .95rem;
+    line-height: 1.6;
+    max-width: 600px;
+  }
+
+  .grid {
+    display: grid;
+    gap: 24px;
     margin-bottom: 40px;
   }
 
-  /* services section */
-  .services {
-    padding: 100px 24px;
-    background: rgba(4,12,16,.4);
-    border-top: 1px solid var(--cyan-dim);
-  }
+  .grid.g3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .grid.g2 { grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
 
-  .section-title {
-    font-size: clamp(2rem, 8vw, 3.5rem);
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--cyan);
-    text-shadow: 0 0 20px var(--cyan);
-    text-align: center;
-    margin-bottom: 60px;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .service-card {
-    background: rgba(4,12,16,.6);
+  .card {
+    background: rgba(4,12,16,.7);
     border: 1px solid var(--cyan-dim);
-    padding: 32px 24px;
-    clip-path: polygon(0 12px, 12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
-    transition: all .35s ease;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
+    padding: 24px;
+    box-shadow: inset 0 0 20px rgba(0,229,255,.05);
   }
 
-  .service-card::before {
-    content: "";
-    position: absolute; top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0,229,255,.2), transparent);
-    animation: shimmer 3s infinite;
+  .card h2 {
+    font-size: 1.2rem;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-bottom: 8px;
   }
 
-  @keyframes shimmer {
-    0%, 100% { left: -100%; }
-    50% { left: 100%; }
-  }
-
-  .service-card:hover {
-    border-color: var(--cyan);
-    box-shadow: 0 0 20px rgba(0,229,255,.4), inset 0 0 20px rgba(0,229,255,.1);
-    transform: translateY(-8px);
-  }
-
-  .service-icon {
-    font-size: 2.5rem;
+  .note {
+    font-size: .8rem;
+    color: var(--muted);
     margin-bottom: 16px;
+  }
+
+  .chain {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .chain .card {
+    padding: 16px;
+    text-align: center;
+  }
+
+  .chain .card b {
+    display: block;
+    color: var(--orange);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: .85rem;
+    margin-bottom: 6px;
+  }
+
+  .chain .card span {
+    font-size: .7rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .big {
+    display: flex; align-items: flex-end; gap: 8px;
+    margin: 20px 0;
+  }
+
+  .big span {
+    font-size: 2.5rem;
+    font-weight: 900;
     color: var(--orange);
     text-shadow: 0 0 10px var(--orange);
   }
 
-  .service-card h3 {
-    font-size: 1.3rem;
-    color: var(--cyan);
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    margin-bottom: 14px;
-  }
-
-  .service-card p {
-    font-family: -apple-system, "Segoe UI", sans-serif;
+  .big em {
+    font-style: normal;
+    font-size: 1rem;
     color: var(--muted);
-    font-size: .95rem;
-    line-height: 1.6;
+    margin-bottom: 4px;
   }
 
-  /* projects section */
-  .projects {
-    padding: 100px 24px;
-    background: rgba(4,12,16,.2);
-  }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 32px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .project {
-    background: rgba(4,12,16,.7);
-    border: 1px solid var(--orange-dim);
-    overflow: hidden;
-    clip-path: polygon(0 16px, 16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
-    transition: all .4s ease;
-    position: relative;
-  }
-
-  .project::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,122,26,.3) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity .4s;
-  }
-
-  .project:hover {
-    border-color: var(--orange);
-    box-shadow: 0 0 30px rgba(255,122,26,.5);
-    transform: translateY(-12px) scale(1.02);
-  }
-
-  .project:hover::before {
-    opacity: 1;
-  }
-
-  .project-image {
-    width: 100%;
-    height: 220px;
-    background: linear-gradient(135deg, #1a3a4a 0%, #0a1f2e 100%);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 3rem;
-    color: var(--orange);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .project-image::before {
-    content: "";
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(255,122,26,.05) 10px,
-      rgba(255,122,26,.05) 20px
-    );
-    animation: slide 20s linear infinite;
-  }
-
-  @keyframes slide {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(50px, 50px); }
-  }
-
-  .project-content {
-    padding: 28px;
-  }
-
-  .project-name {
-    font-size: 1.3rem;
-    color: var(--orange);
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    margin-bottom: 10px;
-  }
-
-  .project-desc {
-    font-family: -apple-system, "Segoe UI", sans-serif;
-    color: var(--muted);
-    font-size: .95rem;
-    line-height: 1.6;
-    margin-bottom: 16px;
-  }
-
-  .project-tags {
-    display: flex; flex-wrap: wrap; gap: 8px;
-  }
-
-  .tag {
-    padding: 6px 12px;
-    font-size: .7rem;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    color: var(--cyan);
+  .goalbar {
+    height: 8px;
+    background: rgba(0,229,255,.1);
     border: 1px solid var(--cyan-dim);
-    background: rgba(0,229,255,.05);
+    margin: 16px 0;
   }
 
-  /* gallery section */
-  .gallery {
-    padding: 100px 24px;
-    background: rgba(4,12,16,.4);
-    border-top: 1px solid var(--cyan-dim);
+  .goalbar i {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), var(--success));
+    box-shadow: 0 0 8px var(--orange);
+    transition: width .4s ease;
   }
 
-  .gallery-grid {
+  .tiles {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
-    max-width: 1400px;
-    margin: 0 auto;
+    margin-bottom: 40px;
   }
 
-  .gallery-item {
-    aspect-ratio: 1;
-    background: linear-gradient(135deg, rgba(0,229,255,.1) 0%, rgba(255,122,26,.1) 100%);
+  .tile {
+    background: rgba(4,12,16,.7);
     border: 1px solid var(--cyan-dim);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 4rem;
-    cursor: pointer;
-    transition: all .3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .gallery-item::before {
-    content: "";
-    position: absolute;
-    inset: -50%;
-    background: conic-gradient(var(--cyan), var(--orange), var(--cyan));
-    animation: rotate 3s linear infinite;
-    opacity: 0;
-    transition: opacity .3s;
-  }
-
-  @keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  .gallery-item:hover::before {
-    opacity: .2;
-  }
-
-  .gallery-item > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* cta buttons */
-  .cta {
-    position: relative; overflow: hidden;
-    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-    padding: 17px 40px;
-    font: inherit; font-size: 1rem; font-weight: 700;
-    letter-spacing: .2em; text-transform: uppercase;
-    color: var(--orange); text-decoration: none; cursor: pointer;
-    background: rgba(255,122,26,.08);
-    border: 2px solid var(--orange);
-    clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
-    box-shadow: 0 0 18px rgba(255,122,26,.45), inset 0 0 18px rgba(255,122,26,.2);
-    animation: glowpulse 2s ease-in-out infinite;
-    transition: color .25s, background .25s, transform .25s;
-    -webkit-tap-highlight-color: transparent;
-    margin-top: 30px;
-  }
-
-  .cta::after {
-    content: ""; position: absolute; top: 0; left: -70%; width: 40%; height: 100%;
-    background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent);
-    transform: skewX(-20deg);
-    animation: sweep 3s ease-in-out infinite;
-  }
-
-  @keyframes sweep { 55%, 100% { left: 140%; } }
-  @keyframes glowpulse {
-    50% { box-shadow: 0 0 34px rgba(255,122,26,.85), inset 0 0 26px rgba(255,122,26,.35); }
-  }
-
-  .cta:hover { background: var(--orange); color: #1a0a00; transform: translateY(-3px); }
-  .cta:active { transform: scale(.97); }
-  .cta svg { width: 20px; height: 20px; fill: currentColor; transition: transform .3s; }
-  .cta:hover svg { transform: translateX(5px); }
-
-  /* footer */
-  footer {
-    padding: 60px 24px;
-    background: rgba(4,12,16,.8);
-    border-top: 1px solid var(--cyan-dim);
+    padding: 20px;
     text-align: center;
   }
 
-  .contact-info {
-    font-family: -apple-system, "Segoe UI", sans-serif;
-    margin-bottom: 30px;
+  .tile-value {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--orange);
+    text-shadow: 0 0 8px var(--orange);
+    display: block;
+    margin-bottom: 4px;
   }
 
-  .contact-info p {
+  .tile-label {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
     color: var(--muted);
-    margin: 8px 0;
-    font-size: .95rem;
   }
 
-  .contact-info a {
-    color: var(--cyan);
-    text-decoration: none;
-    text-shadow: 0 0 6px rgba(0,229,255,.5);
-  }
-
-  .socials {
-    display: flex; justify-content: center; gap: 16px; margin-top: 30px;
-  }
-
-  .social {
-    width: 54px; height: 54px; display: grid; place-items: center;
-    color: var(--cyan); background: rgba(0,229,255,.05);
+  .chart {
+    height: 200px;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(0,229,255,.05) 0px,
+      rgba(0,229,255,.05) 2px,
+      transparent 2px,
+      transparent 4px
+    );
     border: 1px solid var(--cyan-dim);
-    clip-path: polygon(0 8px, 8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
-    cursor: pointer; text-decoration: none;
-    transition: transform .25s, color .25s, background .25s, box-shadow .25s;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .social svg { width: 24px; height: 24px; fill: currentColor; }
-  .social:hover {
-    transform: translateY(-6px);
-    color: #001417; background: var(--cyan);
-    box-shadow: 0 0 26px var(--cyan);
-  }
-
-  .copyright {
-    margin-top: 30px;
-    font-size: .8rem;
+    margin: 16px 0;
+    display: flex; align-items: center; justify-content: center;
     color: var(--muted);
-    letter-spacing: .1em;
+    font-size: .85rem;
   }
 
-  /* toast notification */
-  .toast {
-    position: fixed; left: 50%; bottom: 28px; z-index: 100;
-    transform: translate(-50%, 30px);
-    padding: 12px 22px; background: #031014; color: var(--cyan);
-    border: 1px solid var(--cyan); box-shadow: 0 0 20px rgba(0,229,255,.4);
-    font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
-    opacity: 0; pointer-events: none; transition: .35s;
-    max-width: calc(100vw - 32px);
+  .tw {
+    overflow-x: auto;
+    margin-top: 16px;
   }
 
-  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .85rem;
+  }
 
-  /* responsive */
+  thead tr { border-bottom: 1px solid var(--cyan-dim); }
+
+  th {
+    text-align: left;
+    padding: 12px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: .75rem;
+    font-weight: 700;
+  }
+
+  td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(0,229,255,.1);
+    color: var(--muted);
+  }
+
+  tbody tr:hover { background: rgba(0,229,255,.05); }
+
+  .status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 700;
+  }
+
+  .status-active {
+    background: rgba(0,255,136,.2);
+    color: var(--success);
+  }
+
+  .status-pending {
+    background: rgba(255,122,26,.2);
+    color: var(--orange);
+  }
+
+  .leg {
+    display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px; font-size: .75rem;
+  }
+
+  .leg-item {
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .leg-color {
+    width: 12px; height: 12px;
+  }
+
+  @media (max-width: 1024px) {
+    aside { width: 180px; padding: 16px; }
+    main { padding: 20px; }
+    .grid.g2 { grid-template-columns: 1fr; }
+    .grid.g3 { grid-template-columns: repeat(2, 1fr); }
+  }
+
   @media (max-width: 768px) {
-    header { padding: 12px 16px; }
-    nav { gap: 12px; }
-    nav a { font-size: .7rem; }
-    .hero { padding: 80px 16px 24px; }
-    .section-title { margin-bottom: 40px; }
-    .services-grid { grid-template-columns: 1fr; gap: 16px; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    .cta { width: 100%; }
+    .app { flex-direction: column; height: auto; }
+    aside { width: 100%; border-right: none; border-bottom: 1px solid var(--cyan-dim); padding: 12px; }
+    main { padding: 16px; }
+    h1 { font-size: 1.8rem; }
+    .grid.g2, .grid.g3 { grid-template-columns: 1fr; }
+    .chain { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -511,168 +339,220 @@
   <canvas id="grid" aria-hidden="true"></canvas>
   <div class="scan"></div>
 
-  <header>
-    <div class="logo">⬛ ANGAR</div>
-    <nav>
-      <a href="#services">Услуги</a>
-      <a href="#projects">Проекты</a>
-      <a href="#gallery">Галерея</a>
-      <a href="#footer">Контакты</a>
-    </nav>
-  </header>
-
-  <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-content">
-        <div class="status"><i></i>Готов к новым проектам</div>
-        <h1>Ангары & Металлоконструкции</h1>
-        <p class="subtitle">Промышленное строительство нового уровня</p>
-        <div class="divider"></div>
-        <p class="hero-desc">
-          Проектируем и строим ангары, склады и металлоконструкции любой сложности.
-          От расчёта и чертежей до монтажа под ключ. Надёжно, быстро, профессионально.
-        </p>
-        <button class="cta">
-          Обсудить проект
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.2l-5.6-5.6L12 4l8 8-8 8-1.400-1.400 5.600-5.600H4z"/></svg>
-        </button>
+  <div class="app">
+    <aside>
+      <div class="brand">⬛ ANGAR</div>
+      <nav class="nav-group">
+        <button class="nav" id="nav-strategy" aria-selected="true">📊 Стратегия</button>
+        <button class="nav" id="nav-metrics" aria-selected="false">📈 Метрики</button>
+        <button class="nav" id="nav-projects" aria-selected="false">🏗️ Проекты</button>
+        <button class="nav" id="nav-team" aria-selected="false">👥 Команда</button>
+      </nav>
+      <div style="flex: 1;"></div>
+      <div style="font-size: .75rem; color: var(--muted); line-height: 1.6; border-top: 1px solid var(--cyan-dim); padding-top: 16px;">
+        <strong>Проект:</strong> Промышленные ангары<br>
+        <strong>Сезон:</strong> 2024-2025<br>
+        <strong>Статус:</strong> <span style="color: var(--orange);">В развитии</span>
       </div>
-    </section>
+    </aside>
 
-    <!-- SERVICES -->
-    <section class="services" id="services">
-      <h2 class="section-title">Наши услуги</h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">📐</div>
-          <h3>Проектирование</h3>
-          <p>Расчёты конструкций, чертежи, BIM-моделирование. Полный набор документации для строительства.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🏗️</div>
-          <h3>Строительство</h3>
-          <p>Монтаж ангаров, складов, производственных зданий. Опыт работы с объектами любого размера.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">⚙️</div>
-          <h3>Металлоконструкции</h3>
-          <p>Изготовление и монтаж балок, ферм, связей. Высокая точность и надёжность конструкций.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🔧</div>
-          <h3>Техническое сопровождение</h3>
-          <p>Авторский надзор, контроль качества, консультации на всех этапах строительства.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">♻️</div>
-          <h3>Модернизация</h3>
-          <p>Усиление конструкций, переоборудование зданий, увеличение площадей и функциональности.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">📊</div>
-          <h3>Консультирование</h3>
-          <p>Анализ возможностей, оценка затрат, выбор оптимальных решений для вашего объекта.</p>
-        </div>
+    <main>
+      <div class="top">
+        <h1 id="title">Стратегия развития</h1>
+        <p class="sub">Структура и план развития бизнеса промышленных ангаров и металлоконструкций</p>
       </div>
-    </section>
 
-    <!-- PROJECTS -->
-    <section class="projects" id="projects">
-      <h2 class="section-title">Реализованные проекты</h2>
-      <div class="projects-grid">
-        <div class="project">
-          <div class="project-image">🏭</div>
-          <div class="project-content">
-            <div class="project-name">Ангар 5000м²</div>
-            <p class="project-desc">Промышленный ангар с системой вентиляции и отоплением для производственного комплекса.</p>
-            <div class="project-tags">
-              <span class="tag">Ангар</span>
-              <span class="tag">Металл</span>
-              <span class="tag">2024</span>
+      <!-- STRATEGY -->
+      <section id="view-strategy">
+        <div class="chain">
+          <div class="card"><b>Мы</b><span>ANGAR PRO</span></div>
+          <div class="card"><b>→</b></div>
+          <div class="card"><b>Сервис</b><span>Ангары, склады</span></div>
+          <div class="card"><b>→</b></div>
+          <div class="card"><b>Клиент</b><span>Промышл. предприятия</span></div>
+          <div class="card"><b>→</b></div>
+          <div class="card"><b>Результат</b><span>Готовые объекты</span></div>
+        </div>
+
+        <div class="grid g3">
+          <div class="card">
+            <h2>Цели года</h2>
+            <p class="note">Ключевые показатели</p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div>
+                <div style="font-size: .85rem; color: var(--cyan); margin-bottom: 4px;">📐 Проектов</div>
+                <div class="big"><span>12</span></div>
+              </div>
+              <div>
+                <div style="font-size: .85rem; color: var(--cyan); margin-bottom: 4px;">🏭 Объектов</div>
+                <div class="big"><span>8</span></div>
+              </div>
+              <div>
+                <div style="font-size: .85rem; color: var(--cyan); margin-bottom: 4px;">💰 Выручка</div>
+                <div class="big"><span>₽25М</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Главная цель</h2>
+            <p class="note">Лидерство на юге России</p>
+            <span style="color: var(--orange); font-size: .85rem;">Развитие и доминирование</span>
+            <div class="goalbar"><i style="width: 65%;"></i></div>
+            <p class="note">65% к концу года</p>
+            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--cyan-dim);">
+              <p style="color: var(--muted); font-size: .75rem; margin-bottom: 8px;">Факторы:</p>
+              <ul style="list-style: none; font-size: .75rem; color: var(--muted); line-height: 2;">
+                <li>✓ Качество</li>
+                <li>✓ Скорость</li>
+                <li>✓ Инновации</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>План по кварталам</h2>
+            <p class="note">График развития</p>
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: .8rem;">
+              <div style="padding: 8px; background: rgba(0,229,255,.1); border-left: 2px solid var(--cyan);">
+                <div style="color: var(--cyan); font-weight: 700;">Q1 2024</div>
+                <div style="color: var(--muted);">4 проекта, 2 объекта</div>
+              </div>
+              <div style="padding: 8px; background: rgba(255,122,26,.1); border-left: 2px solid var(--orange);">
+                <div style="color: var(--orange); font-weight: 700;">Q2 2024</div>
+                <div style="color: var(--muted);">5 проектов, 2 объекта</div>
+              </div>
+              <div style="padding: 8px; background: rgba(0,255,136,.1); border-left: 2px solid var(--success);">
+                <div style="color: var(--success); font-weight: 700;">Q3 2024</div>
+                <div style="color: var(--muted);">3 проекта, 4 объекта</div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="project">
-          <div class="project-image">📦</div>
-          <div class="project-content">
-            <div class="project-name">Складской комплекс</div>
-            <p class="project-desc">Многосекционное хранилище с грузолифтами и системой учёта. Срок сдачи — 3 месяца.</p>
-            <div class="project-tags">
-              <span class="tag">Склад</span>
-              <span class="tag">Логистика</span>
-              <span class="tag">2024</span>
+      </section>
+
+      <!-- METRICS -->
+      <section id="view-metrics" hidden>
+        <div class="tiles">
+          <div class="tile"><span class="tile-value">45</span><span class="tile-label">Клиентов</span></div>
+          <div class="tile"><span class="tile-value">28</span><span class="tile-label">Проектов</span></div>
+          <div class="tile"><span class="tile-value">15000м²</span><span class="tile-label">Площадь</span></div>
+          <div class="tile"><span class="tile-value">92%</span><span class="tile-label">Выполнение</span></div>
+          <div class="tile"><span class="tile-value">4.8★</span><span class="tile-label">Рейтинг</span></div>
+          <div class="tile"><span class="tile-value">12 мес</span><span class="tile-label">Сроки</span></div>
+        </div>
+
+        <div class="grid g2">
+          <div class="card">
+            <h2>Динамика проектов</h2>
+            <p class="note">По месяцам</p>
+            <div class="chart">📈 Диаграмма</div>
+          </div>
+          <div class="card">
+            <h2>Распределение типов</h2>
+            <p class="note">Структура портфеля</p>
+            <div class="chart">🥧 Диаграмма</div>
+            <div class="leg">
+              <div class="leg-item"><div class="leg-color" style="background: var(--cyan);"></div>Ангары</div>
+              <div class="leg-item"><div class="leg-color" style="background: var(--orange);"></div>Склады</div>
+              <div class="leg-item"><div class="leg-color" style="background: var(--success);"></div>Конструкции</div>
             </div>
           </div>
         </div>
-        <div class="project">
-          <div class="project-image">🚜</div>
-          <div class="project-content">
-            <div class="project-name">Цех переработки</div>
-            <p class="project-desc">Укрытие для сельскохозяйственной техники с частичным открытым грузовым двором.</p>
-            <div class="project-tags">
-              <span class="tag">АПК</span>
-              <span class="tag">Укрытие</span>
-              <span class="tag">2023</span>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="view-projects" hidden>
+        <div class="card">
+          <h2>Активные проекты</h2>
+          <p class="note">Текущее состояние</p>
+          <div class="tw">
+            <table>
+              <thead>
+                <tr><th>Проект</th><th>Тип</th><th>Площадь</th><th>Прогресс</th><th>Статус</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ангар логистика №1</strong></td>
+                  <td>Ангар</td>
+                  <td>5000м²</td>
+                  <td>85%</td>
+                  <td><span class="status-badge status-active">Активно</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Складской комплекс Юг</strong></td>
+                  <td>Склад</td>
+                  <td>3500м²</td>
+                  <td>60%</td>
+                  <td><span class="status-badge status-active">Активно</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Цех переработки</strong></td>
+                  <td>Ангар</td>
+                  <td>2800м²</td>
+                  <td>45%</td>
+                  <td><span class="status-badge status-pending">В процессе</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TEAM -->
+      <section id="view-team" hidden>
+        <div class="grid g3">
+          <div class="card">
+            <h2>Управление</h2>
+            <p class="note">Руководство</p>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+              <div style="padding: 12px; border-bottom: 1px solid var(--cyan-dim);">
+                <div style="color: var(--cyan); font-weight: 700;">Генеральный директор</div>
+                <div style="color: var(--muted); font-size: .8rem;">Стратегия</div>
+              </div>
+              <div style="padding: 12px; border-bottom: 1px solid var(--cyan-dim);">
+                <div style="color: var(--cyan); font-weight: 700;">Руководитель проектов</div>
+                <div style="color: var(--muted); font-size: .8rem;">Выполнение</div>
+              </div>
+              <div style="padding: 12px;">
+                <div style="color: var(--cyan); font-weight: 700;">Финансовый директор</div>
+                <div style="color: var(--muted); font-size: .8rem;">Бюджет</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Проектирование</h2>
+            <p class="note">Отдел расчётов</p>
+            <div style="margin-top: 16px; color: var(--muted); font-size: .85rem; line-height: 2;">
+              <div>👨‍🔬 Главный инженер</div>
+              <div>👨‍💻 2 инженера-конструктора</div>
+              <div>📐 Специалист CAD/BIM</div>
+              <div>✓ Сметчик</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Строительство</h2>
+            <p class="note">Строй-бригада</p>
+            <div style="margin-top: 16px; color: var(--muted); font-size: .85rem; line-height: 2;">
+              <div>🏗️ Прораб</div>
+              <div>🔧 3 монтажника</div>
+              <div>⚙️ Сварщик</div>
+              <div>✓ Лаборант контроля</div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section class="gallery" id="gallery">
-      <h2 class="section-title">Портфолио объектов</h2>
-      <div class="gallery-grid">
-        <div class="gallery-item">🏢</div>
-        <div class="gallery-item">🏭</div>
-        <div class="gallery-item">📦</div>
-        <div class="gallery-item">🏗️</div>
-        <div class="gallery-item">⚙️</div>
-        <div class="gallery-item">🔩</div>
-        <div class="gallery-item">📐</div>
-        <div class="gallery-item">🛠️</div>
-        <div class="gallery-item">🚀</div>
-        <div class="gallery-item">💪</div>
-        <div class="gallery-item">🎯</div>
-        <div class="gallery-item">✨</div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer id="footer">
-    <div class="contact-info">
-      <h3 style="color: var(--cyan); margin-bottom: 20px; text-transform: uppercase; letter-spacing: .1em;">Свяжитесь с нами</h3>
-      <p>📞 +7 (999) 123-45-67</p>
-      <p>📧 <a href="mailto:info@angar-pro.ru">info@angar-pro.ru</a></p>
-      <p>📍 г. Краснодар, ул. Промышленная, д. 42</p>
-    </div>
-    <div class="socials">
-      <a class="social" href="#" aria-label="Telegram" title="Telegram">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 4.3 18.7 19.5c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L6.1 12.8 1.2 11.3c-1.1-.3-1.1-1.1.2-1.6L20.500 2.300c.9-.3 1.700.2 1.400 2Z"/></svg>
-      </a>
-      <a class="social" href="#" aria-label="WhatsApp" title="WhatsApp">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 13.5c-.4-.2-2.15-1.07-2.49-1.18-.34-.11-.58-.17-.82.17-.24.34-1 1.26-1.21 1.51-.22.25-.43.28-.82.09s-1.6-.59-3.05-1.88c-1.13-1.01-1.89-2.25-2.11-2.59-.22-.35-.02-.53.17-.71.17-.17.39-.43.58-.65.2-.22.26-.37.39-.62.13-.25.07-.46-.04-.65-.1-.19-.82-1.98-1.13-2.71-.3-.72-.6-.62-.82-.62h-.78c-.26 0-.68.1-.96.5-.27.39-1.03 1.01-1.03 2.46s1.06 2.85 1.2 3.06c.14.2 2 3.07 4.83 4.3.68.29 1.2.45 1.61.57.68.21 1.3.18 1.79.1.55-.08 1.68-.69 1.92-1.35.24-.66.24-1.22.17-1.35-.07-.12-.26-.2-.54-.34Z"/></svg>
-      </a>
-      <a class="social" href="#" aria-label="VK" title="ВКонтакте">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.87 14.49c.05.03 2.34 2.27 2.59 2.65.2.3.33.58.07 1-.2.32-.63.41-1.07.41h-2.31c-.46 0-.7-.25-.9-.55-.18-.25-1.06-1.4-1.35-1.72-.17-.19-.3-.25-.52-.25-.33 0-.34.1-.34.65v1.82c0 .4-.08.62-.52.62h-3.63c-.14 0-.22-.04-.35-.04-1.27-.07-2.41-.63-3.24-1.7-.8-1.04-2.01-2.84-2.89-4.45-.24-.43-.46-.88-.67-1.36-.06-.14-.15-.27-.35-.35-.17-.06-.34.04-.45.15l-1.4 1.36c-.27.26-.49.25-.77.01-2.27-1.96-3.73-5.13-4.03-5.74-.16-.34-.24-.64 0-1.08.17-.3.6-.41 1.02-.41h2.27c.4 0 .62.17.79.52.72 1.55 1.6 3.04 2.32 4.17.2.32.39.64.72.83.18.1.35.06.45-.15.07-.13.08-.35.08-.63v-1.7c-.02-.3-.1-.46-.36-.58-.2-.08-.34-.23-.34-.45 0-.3.23-.52.59-.52h2.71c.33 0 .46.13.46.46v2.46c0 .16.07.25.2.25.16 0 .28-.09.43-.24.72-.81 1.24-1.72 1.72-2.74.25-.55.46-1.15.64-1.75.1-.35.32-.57.74-.57h2.39c.42 0 .61.25.49.66-.45 1.54-1.27 2.96-2.05 4.26-.4.67-.82 1.28-1.09 2.04-.18.51.06.85.62 1.37Z"/></svg>
-      </a>
-    </div>
-    <p class="copyright">© 2024 ANGAR PRO. Все права защищены.</p>
-  </footer>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
 
 <script>
-  /* animated canvas background: grid + city */
   (function () {
     const cv = document.getElementById('grid');
     const ctx = cv.getContext('2d');
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let w, h, dpr, hy, cx, gap;
-    const streaks = [];
-    const LANES = 9;
+    let w, h, dpr, hy, cx;
 
     function resize() {
       dpr = Math.min(devicePixelRatio || 1, 2);
@@ -681,212 +561,31 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       hy = h * 0.48;
       cx = w / 2;
-      gap = Math.max(w, 700) / 9;
-      buildCity();
       if (still) frame(0);
     }
 
-    let city = [], tower = null;
-    function rng(seed) {
-      return function () {
-        seed |= 0; seed = seed + 0x6D2B79F5 | 0;
-        let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
-        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-        return ((t ^ t >>> 14) >>> 0) / 4294967296;
-      };
-    }
-
-    function buildCity() {
-      const rand = rng(2077);
-      const scale = Math.min(Math.max(h / 800, 0.7), 1.4);
-      const layers = [
-        { a: 0.35, hMax: 0.16, wMin: 14, wMax: 34 },
-        { a: 1,    hMax: 0.26, wMin: 24, wMax: 62 }
-      ];
-      city = layers.map(L => {
-        const tiers = [];
-        let x = -20;
-        while (x < w + 20) {
-          const bw = (L.wMin + rand() * (L.wMax - L.wMin)) * scale;
-          const bh = h * L.hMax * (0.2 + 0.8 * Math.pow(rand(), 1.3));
-          const n = 1 + Math.floor(rand() * 3);
-          for (let i = 0; i < n; i++) {
-            const tw = bw * (1 - i * 0.28);
-            const th = bh * (1 - i * 0.22);
-            const tx = x + (bw - tw) / 2;
-            const wins = [];
-            const sp = 7 * scale;
-            for (let wy = hy - th + 6; wy < hy - 3; wy += sp) {
-              for (let wx = tx + 4; wx < tx + tw - 6; wx += sp * 1.3) {
-                if (rand() < 0.55) wins.push({
-                  x: wx, y: wy, ph: rand() * 6.28, sp: 0.4 + rand() * 1.6,
-                  o: rand() < 0.06
-                });
-              }
-            }
-            tiers.push({ x: tx, w: tw, h: th, wins, ant: i === n - 1 && rand() < 0.2 });
-          }
-          x += bw + rand() * 8;
-        }
-        return { a: L.a, tiers };
-      });
-      tower = { x: w * (w < 700 ? 0.82 : 0.8), h: h * 0.4, w: 34 * scale };
-    }
-
-    function drawCity(t) {
-      ctx.lineWidth = 1;
-      city.forEach(L => {
-        L.tiers.forEach(b => {
-          ctx.fillStyle = 'rgba(3,9,13,.92)';
-          ctx.fillRect(b.x, hy - b.h, b.w, b.h);
-          ctx.shadowColor = '#00e5ff'; ctx.shadowBlur = 9 * L.a;
-          ctx.strokeStyle = `rgba(0,229,255,${0.85 * L.a})`;
-          ctx.beginPath();
-          ctx.moveTo(b.x, hy); ctx.lineTo(b.x, hy - b.h);
-          ctx.lineTo(b.x + b.w, hy - b.h); ctx.lineTo(b.x + b.w, hy);
-          if (b.ant) { ctx.moveTo(b.x + b.w / 2, hy - b.h); ctx.lineTo(b.x + b.w / 2, hy - b.h - 22); }
-          ctx.stroke();
-        });
-        ctx.shadowBlur = 0;
-        L.tiers.forEach(b => {
-          b.wins.forEach(p => {
-            const on = Math.sin(t * p.sp + p.ph) > -0.35 ? 1 : 0.15;
-            ctx.fillStyle = p.o
-              ? `rgba(255,122,26,${0.9 * on * L.a})`
-              : `rgba(0,229,255,${0.65 * on * L.a})`;
-            ctx.fillRect(p.x, p.y, 4, 2);
-          });
-        });
-      });
-
-      const tx = tower.x, th = tower.h, tw = tower.w;
-      const top = hy - th;
-      ctx.fillStyle = 'rgba(3,9,13,.95)';
-      ctx.shadowColor = '#00e5ff'; ctx.shadowBlur = 14;
-      ctx.strokeStyle = 'rgba(160,250,255,.95)';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(tx - tw, hy);
-      ctx.lineTo(tx - tw * 0.55, hy - th * 0.55);
-      ctx.lineTo(tx - tw * 0.2, hy - th * 0.8);
-      ctx.lineTo(tx - 2, top);
-      ctx.lineTo(tx + 2, top);
-      ctx.lineTo(tx + tw * 0.2, hy - th * 0.8);
-      ctx.lineTo(tx + tw * 0.55, hy - th * 0.55);
-      ctx.lineTo(tx + tw, hy);
-      ctx.closePath();
-      ctx.fill(); ctx.stroke();
-      ctx.shadowBlur = 0;
-      ctx.strokeStyle = 'rgba(0,229,255,.5)';
-      ctx.lineWidth = 1;
-      for (let i = 1; i < 6; i++) {
-        const yy = hy - th * i * 0.15;
-        const half = tw * (1 - i * 0.14);
-        ctx.beginPath(); ctx.moveTo(tx - half, yy); ctx.lineTo(tx + half, yy); ctx.stroke();
-      }
-
-      const pulse = 0.6 + 0.4 * Math.sin(t * 3);
-      ctx.fillStyle = `rgba(255,122,26,${pulse})`;
-      ctx.shadowColor = '#ff7a1a'; ctx.shadowBlur = 16;
-      ctx.beginPath(); ctx.arc(tx, top, 3, 0, 6.283); ctx.fill();
-      ctx.shadowBlur = 0;
-
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      ctx.translate(tx, top);
-      ctx.rotate(-Math.PI / 2 + Math.sin(t * 0.45) * 0.9);
-      const len = Math.max(w, h) * 0.9;
-      const bg = ctx.createLinearGradient(0, 0, len, 0);
-      bg.addColorStop(0, 'rgba(0,229,255,.38)');
-      bg.addColorStop(1, 'rgba(0,229,255,0)');
-      ctx.fillStyle = bg;
-      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(len, -len * 0.05); ctx.lineTo(len, len * 0.05); ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-
-    const GRID_N = 14;
-    const CYCLE_EVERY = 45;
-    const CYCLE_FIRST = 4;
-
-    function spawn() {
-      const dur = 9;
-      const span = w + 400;
-      streaks.push(
-        { k: 3, dir: 1,  x: -200,    v: span / dur, color: '0,229,255' },
-        { k: 4, dir: -1, x: w + 200, v: span / dur * 0.9, color: '255,122,26' }
-      );
-    }
-
-    const pt = (lane, u) => [cx + lane * gap * u, hy + (h - hy) * u];
-
-    let last = 0, spawnT = CYCLE_FIRST;
     function frame(t) {
-      const dt = Math.min((t - last) / 1000 || 0, 0.05);
-      last = t;
-      if (!still) {
-        spawnT -= dt;
-        if (spawnT <= 0) { spawn(); spawnT = CYCLE_EVERY; }
-      }
-
       ctx.fillStyle = '#0a0a0a';
       ctx.fillRect(0, 0, w, h);
 
       const g = ctx.createLinearGradient(0, hy - h * 0.25, 0, hy + h * 0.2);
       g.addColorStop(0, 'rgba(0,229,255,0)');
-      g.addColorStop(0.55, 'rgba(0,229,255,.22)');
+      g.addColorStop(0.55, 'rgba(0,229,255,.15)');
       g.addColorStop(1, 'rgba(0,229,255,0)');
       ctx.fillStyle = g;
       ctx.fillRect(0, hy - h * 0.25, w, h * 0.45);
 
-      drawCity(t / 1000);
-
-      ctx.lineCap = 'round';
-
+      ctx.strokeStyle = 'rgba(0,229,255,.2)';
       ctx.lineWidth = 1;
-      for (let i = -LANES - 6; i <= LANES + 6; i++) {
-        const [x, y] = pt(i, 1);
-        const lg = ctx.createLinearGradient(cx, hy, x, y);
-        lg.addColorStop(0, 'rgba(0,229,255,0)');
-        lg.addColorStop(1, 'rgba(0,229,255,.5)');
-        ctx.strokeStyle = lg;
-        ctx.beginPath(); ctx.moveTo(cx, hy); ctx.lineTo(x, y); ctx.stroke();
-      }
-
-      const N = GRID_N;
-      for (let k = 1; k <= N; k++) {
-        const z = k / N;
-        const u = z * z;
-        const y = hy + (h - hy) * u;
-        ctx.strokeStyle = `rgba(0,229,255,${0.08 + 0.5 * u})`;
-        ctx.lineWidth = 1 + u;
+      for (let k = 1; k < 15; k++) {
+        const y = hy + (h - hy) * (k / 14) ** 2;
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
       }
 
       ctx.shadowColor = '#00e5ff'; ctx.shadowBlur = 14;
-      ctx.strokeStyle = 'rgba(160,250,255,.9)';
+      ctx.strokeStyle = 'rgba(160,250,255,.8)';
       ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.moveTo(0, hy); ctx.lineTo(w, hy); ctx.stroke();
-
-      for (let i = streaks.length - 1; i >= 0; i--) {
-        const s = streaks[i];
-        s.x += s.dir * s.v * dt;
-        if (s.dir > 0 ? s.x - 320 > w : s.x + 320 < 0) { streaks.splice(i, 1); continue; }
-        const u = (s.k / GRID_N) ** 2;
-        const y = hy + (h - hy) * u;
-        const trail = Math.min(w * 0.3, 320);
-        const tx = s.x - s.dir * trail;
-        const sg = ctx.createLinearGradient(tx, y, s.x, y);
-        sg.addColorStop(0, `rgba(${s.color},0)`);
-        sg.addColorStop(1, `rgba(${s.color},.95)`);
-        ctx.shadowColor = `rgb(${s.color})`; ctx.shadowBlur = 12;
-        ctx.strokeStyle = sg;
-        ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(tx, y); ctx.lineTo(s.x, y); ctx.stroke();
-        ctx.fillStyle = '#fff';
-        ctx.beginPath(); ctx.ellipse(s.x, y - 1.5, 5, 2.5, 0, 0, 6.283); ctx.fill();
-      }
-      ctx.shadowBlur = 0;
 
       if (!still) requestAnimationFrame(frame);
     }
@@ -896,19 +595,22 @@
     if (!still) requestAnimationFrame(frame);
   })();
 
-  /* buttons */
-  const toast = document.getElementById('toast');
-  let timer;
-  function showToast(msg) {
-    toast.textContent = msg;
-    toast.classList.add('show');
-    clearTimeout(timer);
-    timer = setTimeout(() => toast.classList.remove('show'), 2200);
-  }
+  const navButtons = document.querySelectorAll('.nav');
+  const views = {
+    'strategy': document.getElementById('view-strategy'),
+    'metrics': document.getElementById('view-metrics'),
+    'projects': document.getElementById('view-projects'),
+    'team': document.getElementById('view-team')
+  };
 
-  document.querySelectorAll('.cta').forEach(btn => {
+  navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      showToast('Спасибо за интерес! Мы скоро свяжемся с вами.');
+      navButtons.forEach(b => b.setAttribute('aria-selected', 'false'));
+      btn.setAttribute('aria-selected', 'true');
+      const view = btn.id.replace('nav-', '');
+      Object.entries(views).forEach(([key, el]) => {
+        el.hidden = key !== view;
+      });
     });
   });
 </script>
