@@ -345,6 +345,28 @@
   .comp ul { padding-left: 16px; color: var(--muted); }
   .comp li { margin-bottom: 4px; }
 
+  .ref-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .ref figure { margin: 0; }
+
+  .ref img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    border: 1px solid var(--cyan-dim);
+    background: rgba(0,229,255,.04);
+  }
+
+  .ref figcaption { padding-top: 10px; font-size: .8rem; color: var(--muted); line-height: 1.5; }
+  .ref figcaption b { color: var(--cyan); display: block; margin-bottom: 4px; text-transform: uppercase; font-size: .75rem; letter-spacing: .06em; }
+  .ref figcaption a { color: var(--cyan); word-break: break-all; font-size: .72rem; }
+
   @media (max-width: 1024px) {
     aside { width: 180px; padding: 16px; }
     main { padding: 20px; }
@@ -379,6 +401,7 @@
         <button class="nav" id="nav-projects" aria-selected="false">🏗️ Проекты</button>
         <button class="nav" id="nav-team" aria-selected="false">👥 Команда</button>
         <button class="nav" id="nav-competitors" aria-selected="false">🔎 Конкуренты</button>
+        <button class="nav" id="nav-references" aria-selected="false">🖼️ Референсы</button>
       </nav>
       <div style="flex: 1;"></div>
       <div style="font-size: .75rem; color: var(--muted); line-height: 1.6; border-top: 1px solid var(--cyan-dim); padding-top: 16px;">
@@ -718,6 +741,19 @@
           </div>
         </div>
       </section>
+
+      <!-- REFERENCES -->
+      <section id="view-references" hidden>
+        <div class="card" style="margin-bottom: 24px;">
+          <h2>От чего отталкиваемся</h2>
+          <p class="note">Картинки не хранятся в проекте: они подгружаются по ссылке из списка ниже. Чтобы добавить референс, впиши в REFERENCES в index.html ссылку на картинку, название и комментарий.</p>
+          <ul style="padding-left: 16px; color: var(--muted); font-size: .85rem; line-height: 1.8;">
+            <li>Визитка с киберпанк-стилем (неон cyan/orange, Tron-сетка). Стиль отменён, сохранён как история.</li>
+            <li>Аналитический дашборд с боковым меню и карточками. Структура разделов взята отсюда.</li>
+          </ul>
+        </div>
+        <div class="ref-grid" id="ref-grid"></div>
+      </section>
     </main>
   </div>
 
@@ -775,8 +811,49 @@
     'metrics': document.getElementById('view-metrics'),
     'projects': document.getElementById('view-projects'),
     'team': document.getElementById('view-team'),
-    'competitors': document.getElementById('view-competitors')
+    'competitors': document.getElementById('view-competitors'),
+    'references': document.getElementById('view-references')
   };
+
+  const REFERENCES = [
+    // { img: 'https://example.com/picture.jpg', title: 'Название', note: 'Что нравится', source: 'https://example.com' }
+  ];
+
+  (function renderReferences() {
+    const grid = document.getElementById('ref-grid');
+    if (!REFERENCES.length) {
+      const p = document.createElement('p');
+      p.className = 'note';
+      p.textContent = 'Ссылок на картинки пока нет.';
+      grid.appendChild(p);
+      return;
+    }
+    REFERENCES.forEach(r => {
+      const fig = document.createElement('figure');
+      fig.className = 'ref';
+      const img = document.createElement('img');
+      img.src = r.img;
+      img.alt = r.title || '';
+      img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
+      const cap = document.createElement('figcaption');
+      const b = document.createElement('b');
+      b.textContent = r.title || '';
+      cap.appendChild(b);
+      if (r.note) cap.appendChild(document.createTextNode(r.note));
+      if (r.source) {
+        const a = document.createElement('a');
+        a.href = r.source;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = r.source;
+        cap.appendChild(document.createElement('br'));
+        cap.appendChild(a);
+      }
+      fig.append(img, cap);
+      grid.appendChild(fig);
+    });
+  })();
 
   navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
