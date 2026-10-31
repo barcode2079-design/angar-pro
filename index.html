@@ -367,6 +367,43 @@
   .ref figcaption b { color: var(--cyan); display: block; margin-bottom: 4px; text-transform: uppercase; font-size: .75rem; letter-spacing: .06em; }
   .ref figcaption a { color: var(--cyan); word-break: break-all; font-size: .72rem; }
 
+  .topic-root {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: .85rem;
+    margin-bottom: 24px;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .topic { display: flex; flex-direction: column; gap: 12px; }
+  .topic-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .topic h2 { margin-bottom: 0; }
+  .topic ul { padding-left: 16px; color: var(--muted); font-size: .8rem; line-height: 1.8; }
+  .topic .status-badge { white-space: nowrap; }
+  .topic-go {
+    margin-top: auto;
+    align-self: flex-start;
+    background: none;
+    border: 1px solid var(--cyan-dim);
+    color: var(--cyan);
+    padding: 6px 12px;
+    font-size: .72rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .topic-go:hover { border-color: var(--cyan); box-shadow: 0 0 10px rgba(0,229,255,.2); }
+
   @media (max-width: 1024px) {
     aside { width: 180px; padding: 16px; }
     main { padding: 20px; }
@@ -396,7 +433,8 @@
     <aside>
       <div class="brand">⬛ ANGAR</div>
       <nav class="nav-group">
-        <button class="nav" id="nav-strategy" aria-selected="true">📊 Стратегия</button>
+        <button class="nav" id="nav-topics" aria-selected="true">🌳 Тематика</button>
+        <button class="nav" id="nav-strategy" aria-selected="false">📊 Стратегия</button>
         <button class="nav" id="nav-metrics" aria-selected="false">📈 Метрики</button>
         <button class="nav" id="nav-projects" aria-selected="false">🏗️ Проекты</button>
         <button class="nav" id="nav-team" aria-selected="false">👥 Команда</button>
@@ -417,8 +455,51 @@
         <p class="sub">Структура и план развития бизнеса промышленных ангаров и металлоконструкций</p>
       </div>
 
+      <!-- TOPICS -->
+      <section id="view-topics">
+        <div class="topic-root">Клиент обращается</div>
+        <div class="topic-grid">
+          <div class="card topic">
+            <div class="topic-head"><h2>1. Стратегия</h2><span class="status-badge status-pending">В работе</span></div>
+            <ul><li>Цели и KPI</li><li>Позиционирование</li><li>Каналы привлечения</li><li>План по кварталам</li></ul>
+            <button class="topic-go" data-go="strategy">Открыть</button>
+          </div>
+          <div class="card topic">
+            <div class="topic-head"><h2>2. Конкуренты</h2><span class="status-badge status-active">Есть разбор</span></div>
+            <ul><li>Регионы: Москва, Краснодар</li><li>Карточка каждого сайта</li><li>Соцсети</li><li>Ценовой анализ</li></ul>
+            <button class="topic-go" data-go="competitors">Открыть</button>
+          </div>
+          <div class="card topic">
+            <div class="topic-head"><h2>3. Аудитория</h2><span class="status-badge status-pending">В работе</span></div>
+            <ul><li>Сельхоз, склады, производство</li><li>Боли и критерии выбора</li><li>Кто принимает решение</li></ul>
+          </div>
+          <div class="card topic">
+            <div class="topic-head"><h2>4. Предложение и цены</h2><span class="status-badge status-pending">Нет данных</span></div>
+            <ul><li>Типовые проекты</li><li>Калькулятор и прайс</li><li>Условия оплаты и гарантии</li></ul>
+          </div>
+          <div class="card topic">
+            <div class="topic-head"><h2>5. Продвижение</h2><span class="status-badge status-pending">В работе</span></div>
+            <ul><li>SEO: запросы, позиции в Яндексе и Google</li><li>Соцсети: посты</li><li>Реклама</li><li>Отзывы на Картах и 2ГИС</li></ul>
+          </div>
+          <div class="card topic">
+            <div class="topic-head"><h2>6. Продукт</h2><span class="status-badge status-pending">Идея</span></div>
+            <ul><li>Кабинет клиента</li><li>Админка</li><li>Агент для владельца бизнеса</li><li>Бот для покупателей</li></ul>
+          </div>
+          <div class="card topic">
+            <div class="topic-head"><h2>7. Дизайн и бренд</h2><span class="status-badge status-pending">В работе</span></div>
+            <ul><li>Референсы</li><li>Палитра и шрифты</li><li>Компоненты</li></ul>
+            <button class="topic-go" data-go="references">Открыть</button>
+          </div>
+          <div class="card topic">
+            <div class="topic-head"><h2>8. Аналитика</h2><span class="status-badge status-pending">В работе</span></div>
+            <ul><li>Метрика</li><li>Позиции</li><li>Заявки</li><li>Отчёты</li></ul>
+            <button class="topic-go" data-go="metrics">Открыть</button>
+          </div>
+        </div>
+      </section>
+
       <!-- STRATEGY -->
-      <section id="view-strategy">
+      <section id="view-strategy" hidden>
         <div class="chain">
           <div class="card"><b>Мы</b><span>ANGAR PRO</span></div>
           <div class="card"><b>→</b></div>
@@ -812,8 +893,13 @@
     'projects': document.getElementById('view-projects'),
     'team': document.getElementById('view-team'),
     'competitors': document.getElementById('view-competitors'),
-    'references': document.getElementById('view-references')
+    'references': document.getElementById('view-references'),
+    'topics': document.getElementById('view-topics')
   };
+
+  document.querySelectorAll('[data-go]').forEach(btn => {
+    btn.addEventListener('click', () => document.getElementById('nav-' + btn.dataset.go).click());
+  });
 
   const REFERENCES = [
     // { img: 'https://example.com/picture.jpg', title: 'Название', note: 'Что нравится', source: 'https://example.com' }
